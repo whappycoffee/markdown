@@ -5,7 +5,7 @@ IDP requires both long reads and short reads information to run the prediction, 
 ![IDP pipeline](https://raw.githubusercontent.com/whappycoffee/whappycoffee-markdown/master/IDP-pipeline.png)
 
 This SpliceMap-LSC-IDP system is consist of three different softwares(developed by the same group)
-    SpliceMap takes short reads form SGS platform to detect junctions. 
-    LSC uses short reads to correct the long reads from Third Generation Seq, and produce error-corrected long reads.
+*SpliceMap takes short reads form SGS platform to detect junctions. 
+*LSC uses short reads to correct the long reads from Third Generation Seq, and produce error-corrected long reads.
 
 IDP requires FASTA or GPD format for long reads and requires SpliceMap BED or SAM format for short reads
