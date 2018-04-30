@@ -1,0 +1,153 @@
+% !TEX encoding = IsoLatin9
+
+
+%\documentclass[12pt]{amsart} 
+\documentclass[12pt]{article}
+
+
+%\usepackage{amssymb,amsmath,amsthm}
+%\usepackage{graphicx}
+%\usepackage{amsthm}
+%\usepackage{subfig}
+%\usepackage{cite}
+%\usepackage{booktabs}
+%\usepackage[round]{natbib}
+%
+%\newtheorem{theorem}{Theorem}[section]
+%\newtheorem*{theorem*}{Theorem}
+%\newtheorem{lemma}{Lemma}
+%\newtheorem*{lemma*}{Lemma}
+%\newtheorem{corollary}{Corollary}
+%\newtheorem*{corollary*}{Corollary}
+%\newtheorem{remark}{Remark}
+%\newtheorem*{remark*}{Remark}
+%%\newtheorem{proposition}[theorem]{Proposition}
+%%\newtheorem*{exmp*}{Example}
+
+
+\usepackage[round, sort]{natbib}
+%\usepackage[square, sort]{natbib}
+\bibliographystyle{plainnat}
+\RequirePackage[colorlinks,citecolor=blue,urlcolor=blue]{hyperref}
+
+\usepackage{booktabs}
+\usepackage{subfig}
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{fancyref}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{longtable}
+\usepackage{amsfonts}
+\usepackage{bm}
+\usepackage{lmodern}
+
+\setcounter{MaxMatrixCols}{10}
+
+
+\makeatletter
+\makeatother
+\def\theequation{\thesection.\arabic{equation}}
+\def\theequation{\arabic{equation}}
+\renewcommand{\theequation}{\arabic{equation}}
+\hoffset=-0.675in
+\advance\topmargin by -0.75truein
+\oddsidemargin=0.675truein
+\evensidemargin=0.675truein
+\advance\textheight by 1.25truein
+\setlength\textwidth{6.5in}
+\vsize=9.0in
+\def\mybibliography#1{{\begin{center} \bf References \end{center}}\list
+ {}{\setlength{\leftmargin}{1em}\setlength{\labelsep}{0pt}
+\itemindent=-\leftmargin}
+ \def\newblock{\hskip .02em plus .20em minus -.07em}
+ \sloppy\clubpenalty4000\widowpenalty4000
+ \sfcode`\.=1000\relax}
+\newbox\TempBox \newbox\TempBoxA
+\def\uw#1{  \ifmmode\setbox\TempBox=\hbox{$#1$}\else\setbox\TempBox=\hbox{#1}\fi  \setbox\TempBoxA=\hbox to \wd\TempBox{\hss\char'176\hss}  \rlap{\copy\TempBox}\smash{\lower9pt\hbox{\copy\TempBoxA}}}
+\newbox\TempBox \newbox\TempBoxA
+\def\uwd#1{  \ifmmode\setbox\TempBox=\hbox{$#1$}\else\setbox\TempBox=\hbox{#1}\fi  \setbox\TempBoxA=\hbox to \wd\TempBox{\hss\char'176\hss}  \rlap{\copy\TempBox}\smash{\lower10pt\hbox{\copy\TempBoxA}}}
+\def\mathunderaccent#1{\let\theaccent#1\mathpalette\putaccentunder}
+\def\putaccentunder#1#2{\oalign{$#1#2$\crcr\hidewidth
+\vbox to.2ex{\hbox{$#1\theaccent{}$}\vss}\hidewidth}}
+\def\ttilde#1{\tilde{\tilde{#1}}}
+\newcommand{\bfgamma}{\mbox{\boldmath $\gamma$}}
+\def\doublespace{\baselineskip=19pt minus 1pt}
+\newcommand{\nc}{\newcommand}
+\def\nr{\par \noindent}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{prop}{Proposition}
+\newtheorem{rem}{Remark}
+\newtheorem{example}{Example}
+\newtheorem{pro}{Proof}
+\newtheorem{claim}{Claim}
+\newtheorem{definition}{Definition}
+\newtheorem{assumption}{Assumption}
+\setlength{\parskip }{ 1.5ex}
+{\bf}{\it}
+\newtheorem{remark}{Remark}
+{\bf}{\it}
+\newtheorem{corollary}{Corollary}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+
+\title{Research Report for Isoform and  Alternative Splicing}
+\author{Yibo Wu}
+\date{04/30/2018}
+
+
+\begin{document}
+\maketitle
+
+\section{Introduction} 
+Iso-Seq techniques has been used to obtain the full-length transcripts, which can be used to discover novel Alternative Splicing(AS) evens and isoforms[TAPIS]. Although most of the existing RNA-Seq methods like IDP and SpliceGrapher only use short read as input data[SQANTI], during this research I have tried to follow two reported Iso-Seq analyzing pipelines to detect the novel AS events from our Iso-Seq data. 
+
+\section{Efforts on IDP and SpliceGrapher}
+\subsection{IDP}
+\begin{enumerate}
+
+\item IDP is an gene Isoform Detection and Prediction tool, it requires both short reads and long reads as input. First, long reads would be corrected by short reads and junction information would be obtained from short reads. Then IDP can detect novel isoforms from the junction information and the corrected long reads[IDP].
+
+\end{enumerate}
+
+\subsection{SpliceGrapher}
+
+\begin{enumerate}
+\item SpliceGrapher takes reference genome, gene model and short reads as input data. It would first use the reference genome and gene model data to create a classifier file which includes the donor and acceptor information. And then false-positive alignments in the short reads data would be removed. Finally it would detect novel AS events in the input data[SpliceGrapher].
+\end{enumerate}
+
+\section{Efforts on TAPIS and SQANTI pipeline}
+
+\subsection{TAPIS}
+\begin{enumerate}
+\item It is reported that the TAPIS pipeline can use single molecule long reads as input to detect novel isoforms. This pipeline is roughly based on GMAP/GSNAP and SpliceGrapher.
+\item In the TAPIS pipeline, long reads would first be aligned to the reference genome using GMAP. Since our data had already been aligned to the reference genome, I just skipped this step.
+\item Second, error correction would be performed iteratively using the reference genome, however the description about the error correction method is not very clear, it said:"Next, indels and mismatches are corrected using the reference genome. In the first iteration, errors in reads near splice junctions are left uncorrected to improve accurate detection of splice sites in subsequent rounds of alignment." They did mentioned two error correction methods, "prooveread" and "LoRDEC", but never clarified the one they adopted. Since the error correction would only affect the accuracy of the detection, I skipped the error correction step temporally.
+\item At last, AS analysis was conducted using SpliceGrapher, details are described in the text above, the results were shown in the two graphs.
+\end{enumerate}
+
+
+
+
+
+
+
+\begin{figure}
+    \begin{center}
+       \subfloat{\includegraphics[width=6in,height=3in]{../../Studies/alternative_splicing/AS_hg19stats.png}}
+    \end{center}
+    \caption{Alternative Splicing events}
+\end{figure}
+
+\begin{figure}
+    \begin{center}
+        \subfloat{\includegraphics[width=6in,height=3in]{../../Studies/alternative_splicing/AS_hg19counts.png}}
+    \end{center}
+    \caption{Alternative Splicing counts in each gene}
+\end{figure}
+
+
+\end{document}
